@@ -1,10 +1,19 @@
-#!name=闲鱼去广告（抓包精准版）
-#!desc=基于 HAR 的精准广告请求拦截；保留普通商品视频、交易及聊天功能。
+#!name=闲鱼去广告与日志拦截（双抓包版）
+#!desc=保留原广告规则，补充日志路径拦截；共享服务规则会影响其他阿里系应用。HTTPS路径规则需MITM，尚未实机验证。
 #!author=bongnod
-#!version=1.0.0
+#!version=1.1.0
 
 [Rule]
 URL-REGEX,^https?://cloud\.video\.taobao\.com/play/.*[?&]sBizCode=alimama_tuijian(?:\.mp4)?(?:&|$),REJECT
 DOMAIN,ef-dongfeng.tanx.com,REJECT
 DOMAIN,bdlog.tanx.com,REJECT
 DOMAIN,ipm.atm.youku.com,REJECT
+
+[URL Rewrite]
+# 日志上报，不是广告；如需保留诊断日志，可删除以下三条规则。
+^https?:\/\/(?:loggw-ex|mdap)\.alipay\.com\/loggw\/logUpload\.do(?:\?|$) reject
+^https?:\/\/(?:alivc-aio\.cn-hangzhou\.dualstack|vod-newplayer\.cn-hangzhou|videocloud\.cn-hangzhou\.dualstack)\.log\.aliyuncs\.com\/logstores\/(?:common|hermes-player|newplayer)\/shards\/lb(?:\?|$) reject
+^https?:\/\/dualstack-logs\.amap\.com\/ws\/log\/upload(?:\?|$) reject
+
+[MITM]
+hostname = cloud.video.taobao.com, loggw-ex.alipay.com, mdap.alipay.com, alivc-aio.cn-hangzhou.dualstack.log.aliyuncs.com, vod-newplayer.cn-hangzhou.log.aliyuncs.com, videocloud.cn-hangzhou.dualstack.log.aliyuncs.com, dualstack-logs.amap.com
