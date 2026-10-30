@@ -1,0 +1,10 @@
+#!name=闲鱼去广告（抓包精准版）
+#!desc=基于 HAR 的精准广告请求拦截；保留普通商品视频、交易及聊天功能。
+#!author=bongnod
+#!version=1.0.0
+
+[Rule]
+URL-REGEX,^https?://cloud\.video\.taobao\.com/play/.*[?&]sBizCode=alimama_tuijian(?:\.mp4)?(?:&|$),REJECT
+DOMAIN,ef-dongfeng.tanx.com,REJECT
+DOMAIN,bdlog.tanx.com,REJECT
+DOMAIN,ipm.atm.youku.com,REJECT
